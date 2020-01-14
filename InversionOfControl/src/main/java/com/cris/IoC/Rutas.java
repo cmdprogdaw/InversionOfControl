@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cris.IoC.beans.autor.AutorBean;
+import com.cris.IoC.servicio.ComponenteNombres;
 
 @Controller
 public class Rutas {
@@ -22,12 +23,29 @@ public class Rutas {
 	AutorBean pedro;
 	
 	
+	@Autowired
+	ComponenteNombres componenteNombres;
+	
+	
 	@GetMapping("/")
 	@ResponseBody //va a devolver a una pag web el mensaje del return (sin falta de crearla)
 	public String rutaInicial() {
 		
-		pedro.setEdad(99);
+		String salida = "";
+		for(String str: componenteNombres.getNombres()) {
+			
+			salida += str+"<br>";
+		}
 		
-		return juan+"<br>"+maria+"<br>"+pedro;
+		return salida;
+	}
+	
+	
+	@GetMapping("/singleton1")
+	@ResponseBody
+	public String rutaSingleton() {
+		
+		
+		return componenteNombres.toString();
 	}
 }
